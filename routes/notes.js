@@ -1,12 +1,11 @@
 const notes = require("express").Router();
+const path = require("path");
 
-// Import our files containing our routes
-const notesRouter = require("../public/notes.html");
 
-notes.get('/', (req, res) => res.sendFile(notesRouter));
+notes.get('/', (req, res) => res.sendFile(path.join(__dirname, '/notes')));  //.html
 
-notes.post('/', (req, res) => {
+// notes.post('/', (req, res) => {
 
-});
+// });
 
 module.exports = notes;

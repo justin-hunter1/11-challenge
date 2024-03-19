@@ -2,7 +2,7 @@ const api = require("express").Router();
 const uuid = require("../helpers/uuid.js");
 const notesData = require("../db/db.json");
 const fs = require("fs");
-const path = require("path");
+
 
 // Import our files containing our routes
 // const apirouter = require("../public");
