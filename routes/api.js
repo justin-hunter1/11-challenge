@@ -4,34 +4,29 @@ const notesData = require("../db/db.json");
 const fs = require("fs");
 
 
-// Import our files containing our routes
-// const apirouter = require("../public");
-
-
-
-api.get("/api/notes", (req, res) => res.json(notesData));
-
-api.post("/api/notes", (req, res) => {
-  console.log(`${req.method} request received.`);
-
-  const { product, review, username } = req.body;
-
-  if (product && review && username) {
-    const newReview = {
-      product,
-      review,
-      username,
-      review_id: uuid(),
-    };
-  
-// Convert the data to a string so we can save it
-    const reviewString = JSON.stringify(newReview);
-  
-// Write the string to a file
-    fs.writeFile("../db/db.json", reviewString, (err) =>
-      err ? console.error(err) : console.log(`Review for ${newReview.product} has been written to JSON file`))
-  }
+// API GET route for reading all entries in file
+api.get('/notes', (req, res) => {
+  console.log(`${req.method} request received`);
+  fs.readFile('./db/db.json', (err, data) => {
+    if (err) { 
+      return console.error("no records");
+    }
+    else {
+      let readNotes = JSON.parse(data);
+      res.json(readNotes);
+    }
+  });
 });
 
+
+// API POST route for creating entries in file
+api.post('/notes', (req, res) => {
+  console.log(`${req.method} request received.`);
+  const newNote = req.body;
+  newNote.id = uuid();
+  notesData.push(newNote);
+  fs.writeFileSync('./db/db.json', JSON.stringify(notesData));
+  res.json(notesData);
+});
 
 module.exports = api;

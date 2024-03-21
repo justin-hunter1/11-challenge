@@ -15,13 +15,13 @@ app.use(express.json());
 
 // routes to route files
 app.use("/notes", notes);
-// app.use("/api", api);
+app.use("/api", api);
 
+// HTML home route
 app.get("*", (req, res) =>
-  res.sendFile(path.join(__dirname, '/public/'))); //index.html
+  res.sendFile(path.join(__dirname, '/public/')));
 
-
-  app.listen(PORT, () => {
-    console.log(`Server available at localhost:${PORT}`);
+app.listen(PORT, () => {
+  console.log(`Server available at localhost:${PORT}`);
   });
   
